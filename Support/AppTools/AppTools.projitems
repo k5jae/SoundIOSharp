@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{E540EFFB-4F9A-416C-A06B-362204E543D2}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>AppTools</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ExitHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PosixExitHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsExitHandler.cs" />
+  </ItemGroup>
+</Project>

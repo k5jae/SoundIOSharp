@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA4F02E3-0B5E-42CD-B8D9-5583FA51D66E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NAudio</RootNamespace>
+    <AssemblyName>NAudioLite</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug Any CPU</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>NAudio.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\NAudio.XML</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Codecs\ALawDecoder.cs" />
+    <Compile Include="Codecs\ALawEncoder.cs" />
+    <Compile Include="Codecs\G722Codec.cs" />
+    <Compile Include="Codecs\MuLawDecoder.cs" />
+    <Compile Include="Codecs\MuLawEncoder.cs" />
+    <Compile Include="Dsp\EnvelopeGenerator.cs" />
+    <Compile Include="Dsp\WdlResampler.cs" />
+    <Compile Include="FileFormats\Wav\WaveFileChunkReader.cs" />
+    <Compile Include="Utils\ChunkIdentifier.cs" />
+    <Compile Include="Utils\FieldDescriptionAttribute.cs" />
+    <Compile Include="Utils\ByteArrayExtensions.cs" />
+    <Compile Include="Utils\FieldDescriptionHelper.cs" />
+    <Compile Include="Utils\MarshalHelpers.cs" />
+    <Compile Include="Utils\WavePositionExtensions.cs" />
+    <Compile Include="Utils\IEEE.cs" />
+    <Compile Include="Wave\SampleProviders\AdsrSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\ConcatenatingSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\FadeInOutSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\MultiplexingSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\OffsetSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\Pcm32BitToSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\SampleProviderConverters.cs" />
+    <Compile Include="Wave\SampleProviders\SampleToWaveProvider16.cs" />
+    <Compile Include="Wave\SampleProviders\SampleToWaveProvider24.cs" />
+    <Compile Include="Wave\SampleProviders\SignalGenerator.cs" />
+    <Compile Include="Wave\SampleProviders\StereoToMonoSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\WaveToSampleProvider64.cs" />
+    <Compile Include="Wave\SampleProviders\WdlResamplingSampleProvider.cs" />
+    <Compile Include="Wave\WaveExtensionMethods.cs" />
+    <Compile Include="Dsp\BiQuadFilter.cs" />
+    <Compile Include="Dsp\Complex.cs" />
+    <Compile Include="Dsp\EnvelopeDetector.cs" />
+    <Compile Include="Dsp\FastFourierTransform.cs" />
+    <Compile Include="Dsp\ImpulseResponseConvolution.cs" />
+    <Compile Include="Dsp\SimpleCompressor.cs" />
+    <Compile Include="Dsp\SimpleGate.cs" />
+    <Compile Include="FileFormats\Map\CakewalkDrumMapping.cs" />
+    <Compile Include="FileFormats\Map\CakewalkMapFile.cs" />
+    <Compile Include="FileFormats\Map\MapBlockHeader.cs" />
+    <Compile Include="FileFormats\Sfz\SfzFileReader.cs" />
+    <Compile Include="FileFormats\SoundFont\Generator.cs" />
+    <Compile Include="FileFormats\SoundFont\GeneratorBuilder.cs" />
+    <Compile Include="FileFormats\SoundFont\GeneratorEnum.cs" />
+    <Compile Include="FileFormats\SoundFont\InfoChunk.cs" />
+    <Compile Include="FileFormats\SoundFont\Instrument.cs" />
+    <Compile Include="FileFormats\SoundFont\InstrumentBuilder.cs" />
+    <Compile Include="FileFormats\SoundFont\Modulator.cs" />
+    <Compile Include="FileFormats\SoundFont\ModulatorBuilder.cs" />
+    <Compile Include="FileFormats\SoundFont\ModulatorType.cs" />
+    <Compile Include="FileFormats\SoundFont\Preset.cs" />
+    <Compile Include="FileFormats\SoundFont\PresetBuilder.cs" />
+    <Compile Include="FileFormats\SoundFont\PresetsChunk.cs" />
+    <Compile Include="FileFormats\SoundFont\RiffChunk.cs" />
+    <Compile Include="FileFormats\SoundFont\SampleDataChunk.cs" />
+    <Compile Include="FileFormats\SoundFont\SampleHeader.cs" />
+    <Compile Include="FileFormats\SoundFont\SampleHeaderBuilder.cs" />
+    <Compile Include="FileFormats\SoundFont\SampleMode.cs" />
+    <Compile Include="FileFormats\SoundFont\SFSampleLink.cs" />
+    <Compile Include="FileFormats\SoundFont\SFVersion.cs" />
+    <Compile Include="FileFormats\SoundFont\SFVersionBuilder.cs" />
+    <Compile Include="FileFormats\SoundFont\SoundFont.cs" />
+    <Compile Include="FileFormats\SoundFont\StructureBuilder.cs" />
+    <Compile Include="FileFormats\SoundFont\Zone.cs" />
+    <Compile Include="FileFormats\SoundFont\ZoneBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\BufferHelpers.cs" />
+    <Compile Include="Utils\ByteEncoding.cs" />
+    <Compile Include="Utils\CircularBuffer.cs" />
+    <Compile Include="Utils\Decibels.cs" />
+    <Compile Include="Utils\IgnoreDisposeStream.cs" />
+    <Compile Include="Utils\MergeSort.cs" />
+    <Compile Include="Wave\SampleChunkConverters\ISampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\Mono16SampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\Mono24SampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\Mono8SampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\MonoFloatSampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\Stereo16SampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\Stereo24SampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\Stereo8SampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleChunkConverters\StereoFloatSampleChunkConverter.cs" />
+    <Compile Include="Wave\SampleProviders\MixingSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\PanningSampleProvider.cs" />
+    <Compile Include="Wave\WaveFormats\Gsm610WaveFormat.cs" />
+    <Compile Include="Wave\WaveFormats\ImaAdpcmWaveFormat.cs" />
+    <Compile Include="Wave\WaveFormats\Mp3WaveFormat.cs" />
+    <Compile Include="Wave\WaveFormats\OggWaveFormat.cs" />
+    <Compile Include="Wave\WaveFormats\TrueSpeechWaveFormat.cs" />
+    <Compile Include="Wave\WaveFormats\WaveFormat.cs" />
+    <Compile Include="Wave\WaveFormats\AdpcmWaveFormat.cs" />
+    <Compile Include="Wave\WaveFormats\WaveFormatCustomMarshaler.cs" />
+    <Compile Include="Wave\WaveFormats\WaveFormatEncoding.cs" />
+    <Compile Include="Wave\WaveFormats\WaveFormatExtensible.cs" />
+    <Compile Include="Wave\WaveFormats\WaveFormatExtraData.cs" />
+    <Compile Include="Wave\WaveFormats\WmaWaveFormat.cs" />
+    <Compile Include="Wave\SampleProviders\MeteringSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\NotifyingSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\VolumeSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\SampleProviderConverterBase.cs" />
+    <Compile Include="Wave\SampleProviders\SampleToWaveProvider.cs" />
+    <Compile Include="Wave\WaveProviders\BufferedWaveProvider.cs" />
+    <Compile Include="Wave\SampleProviders\MonoToStereoSampleProvider.cs" />
+    <Compile Include="Wave\WaveProviders\MixingWaveProvider32.cs" />
+    <Compile Include="Wave\WaveProviders\MultiplexingWaveProvider.cs" />
+    <Compile Include="Wave\WaveProviders\SilenceWaveProvider.cs" />
+    <Compile Include="Wave\WaveProviders\StereoToMonoProvider16.cs" />
+    <Compile Include="Wave\WaveProviders\MonoToStereoProvider16.cs" />
+    <Compile Include="Wave\WaveProviders\VolumeWaveProvider16.cs" />
+    <Compile Include="Wave\WaveProviders\WaveFloatTo16Provider.cs" />
+    <Compile Include="Wave\WaveProviders\WaveProvider16.cs" />
+    <Compile Include="Wave\WaveProviders\WaveProvider32.cs" />
+    <Compile Include="Wave\SampleProviders\WaveToSampleProvider.cs" />
+    <Compile Include="Wave\WaveProviders\WaveRecorder.cs" />
+    <Compile Include="Wave\WaveStreams\AiffFileReader.cs" />
+    <Compile Include="Wave\WaveStreams\BlockAlignReductionStream.cs" />
+    <Compile Include="Wave\WaveStreams\CueList.cs" />
+    <Compile Include="Wave\WaveStreams\CueWaveFileReader.cs" />
+    <Compile Include="Wave\WaveStreams\ISampleNotifier.cs" />
+    <Compile Include="Wave\SampleProviders\Pcm16BitToSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\Pcm24BitToSampleProvider.cs" />
+    <Compile Include="Wave\SampleProviders\Pcm8BitToSampleProvider.cs" />
+    <Compile Include="Wave\WaveStreams\RawSourceWaveStream.cs" />
+    <Compile Include="Wave\WaveStreams\RiffChunk.cs" />
+    <Compile Include="Wave\WaveStreams\SimpleCompressorStream.cs" />
+    <Compile Include="Wave\WaveStreams\Wave32To16Stream.cs" />
+    <Compile Include="Wave\WaveStreams\WaveChannel32.cs" />
+    <Compile Include="Wave\SampleProviders\SampleChannel.cs" />
+    <Compile Include="Wave\WaveStreams\WaveFileReader.cs" />
+    <Compile Include="Wave\WaveStreams\WaveMixerStream32.cs" />
+    <Compile Include="Wave\WaveStreams\WaveOffsetStream.cs" />
+    <Compile Include="Wave\WaveStreams\WaveStream.cs" />
+    <Compile Include="Wave\WaveProviders\Wave16toFloatProvider.cs" />
+    <Compile Include="Dmo\AudioMediaSubtypes.cs" />
+    <Compile Include="Wave\WaveStreams\AiffFileWriter.cs" />
+    <Compile Include="Wave\WaveStreams\CueWaveFileWriter.cs" />
+    <Compile Include="Wave\WaveStreams\WaveFileWriter.cs" />
+    <Compile Include="Wave\WaveStreams\WaveBuffer.cs" />
+    <Compile Include="Wave\WaveStreams\IWaveBuffer.cs" />
+    <Compile Include="Wave\WaveProviders\IWaveProvider.cs" />
+    <Compile Include="Wave\SampleProviders\ISampleProvider.cs" />
+    <Compile Include="Utils\IWavePosition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Changes.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
