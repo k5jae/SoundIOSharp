@@ -119,7 +119,13 @@ namespace sio_sine
 
 					soundIO.FlushEvents ();
 
-					var device = soundIO.FindOutputDevice(targetDevice);
+					var devices = soundIO.FindOutputDevices(targetDevice);
+					Device device = null;
+
+					if (devices != null && devices.Length > 0) {
+						device = devices [0];
+					}
+
 					if (device == null) {
 						if (targetDevice != null && targetDevice != string.Empty) {
 							Console.WriteLine ("Output device not found: {0}, trying default...", targetDevice);

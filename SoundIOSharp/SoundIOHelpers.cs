@@ -25,23 +25,18 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
-
 
 namespace SoundIOSharp
 {
 	public partial class SoundIO : IDisposable
 	{
-		public Device FindOutputDevice(string name)
+		public Device GetOutputDevice(string id)
 		{
-			return FindOutputDevice (name, false);
-		}
-
-		public Device FindOutputDevice(string name, bool raw)
-		{
-			if (name == null || name == string.Empty)
+			if (id == null || id == string.Empty)
 				return null;
-			
+
 			var count = OutputDeviceCount ();
 			for (int i = 0; i < count; i += 1) {
 
@@ -50,8 +45,7 @@ namespace SoundIOSharp
 				try {
 					device = GetOutputDevice(i);
 
-					if (device.Name.Contains(name) && device.IsRaw == raw) {
-						//Console.WriteLine ("{0}: {1}", device.Id, device.Name);
+					if (device.Id == id) {
 						keepDevice = true;
 						return device;
 					}
@@ -64,16 +58,40 @@ namespace SoundIOSharp
 			return null;
 		}
 
-		public Device FindInputDevice(string name)
-		{
-			return FindInputDevice (name, false);
-		}
-
-		public Device FindInputDevice(string name, bool raw)
+		public Device[] FindOutputDevices(string name, bool raw = false)
 		{
 			if (name == null || name == string.Empty)
 				return null;
-			
+
+			var devices = new List<Device> ();
+			var count = OutputDeviceCount ();
+
+			for (int i = 0; i < count; i += 1) {
+
+				Device device = null;
+				bool keepDevice = false;
+				try {
+					device = GetOutputDevice(i);
+
+					if (device.Name.Contains(name) && device.IsRaw == raw) {
+						keepDevice = true;
+						devices.Add(device);
+						device = null;
+					}
+				}
+				finally {
+					if (!keepDevice && device != null)
+						device.Dispose ();
+				}
+			}
+			return devices.ToArray();
+		}
+
+		public Device GetInputDevice(string id)
+		{
+			if (id == null || id == string.Empty)
+				return null;
+
 			var count = InputDeviceCount ();
 			for (int i = 0; i < count; i += 1) {
 
@@ -82,8 +100,7 @@ namespace SoundIOSharp
 				try {
 					device = GetInputDevice(i);
 
-					if (device.Name.Contains(name) && device.IsRaw == raw) {
-						//Console.WriteLine ("{0}: {1}", device.Id, device.Name);
+					if (device.Id == id) {
 						keepDevice = true;
 						return device;
 					}
@@ -96,7 +113,34 @@ namespace SoundIOSharp
 			return null;
 		}
 
+		public Device[] FindInputDevices(string name, bool raw = false)
+		{
+			if (name == null || name == string.Empty)
+				return null;
 
+			var devices = new List<Device> ();
+			var count = InputDeviceCount ();
+
+			for (int i = 0; i < count; i += 1) {
+
+				Device device = null;
+				bool keepDevice = false;
+				try {
+					device = GetInputDevice(i);
+
+					if (device.Name.Contains(name) && device.IsRaw == raw) {
+						keepDevice = true;
+						devices.Add(device);
+						device = null;
+					}
+				}
+				finally {
+					if (!keepDevice && device != null)
+						device.Dispose ();
+				}
+			}
+			return devices.ToArray();
+		}
 	}
 }
 

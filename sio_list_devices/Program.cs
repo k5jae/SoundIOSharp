@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using SoundIOSharp;
 
 namespace sio_list_devices
@@ -131,27 +132,46 @@ namespace sio_list_devices
 			int default_output = soundIo.DefaultOutputDeviceIndex();
 			int default_input = soundIo.DefaultInputDeviceIndex();
 
+			var inputDeviceNameList = new Dictionary<string, string> ();
+			var outputDeviceNameList = new Dictionary<string, string> ();
+
 			Console.WriteLine("--------Input Devices--------");
 			for (int i = 0; i < input_count; i += 1) {
 				using (Device device = soundIo.GetInputDevice (i)) {
-					PrintDevice (device, default_input == i);
+					int count = 1;
+					var name = device.Name;
+					while (inputDeviceNameList.ContainsKey(name)) {
+						count++;
+						name = string.Format ("{0}, #{1}", device.Name, count);
+					}
+
+					inputDeviceNameList.Add(name, device.Id);
+					PrintDevice (name, device, default_input == i);
 				}
 			}
 
 			Console.WriteLine("\n--------Output Devices--------");
 			for (int i = 0; i < output_count; i += 1) {
 				using (Device device = soundIo.GetOutputDevice (i)) {
-						PrintDevice (device, default_output == i);
+					int count = 1;
+					var name = device.Name;
+					while (outputDeviceNameList.ContainsKey(name)) {
+						count++;
+						name = string.Format ("{0}, #{1}", device.Name, count);
+					}
+
+					outputDeviceNameList.Add(name, device.Id);
+					PrintDevice (name, device, default_output == i);
 				}
 			}
  		}
 
-		private static void PrintDevice(Device device, bool is_default)
+		private static void PrintDevice(string nameId, Device device, bool is_default)
 		{
 			string default_str = is_default ? " (default)" : "";
 			string raw_str = device.IsRaw ? " (raw)" : "";
 
-			Console.WriteLine("{0}{1}{2}", device.Name, default_str, raw_str);
+			Console.WriteLine("{0}{1}{2}", nameId, default_str, raw_str);
 			if (shortOutput)
 				return;
 			Console.WriteLine("  id: {0}", device.Id);
