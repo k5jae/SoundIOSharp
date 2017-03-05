@@ -72,6 +72,10 @@ namespace SoundIOSharp
 		internal IntPtr nativePtr;
 		internal DeviceNative nativeStruct;
 
+		internal OutStream outStream;
+		internal InStream inStream;
+
+
 		public string Id {
 			get {
 				return nativeStruct.id;
@@ -156,10 +160,11 @@ namespace SoundIOSharp
 			}
 		}
 
-		internal Device(IntPtr nativePtr, DeviceNative nativeStruct)
+		internal Device(SoundIO owner, IntPtr nativePtr)
 		{
 			this.nativePtr = nativePtr;
-			this.nativeStruct = nativeStruct;
+			this.nativeStruct = (DeviceNative)Marshal.PtrToStructure (nativePtr, typeof (DeviceNative));
+			owner.ShutdownSoundIO += (sender, e) => Dispose(true);
 
 			IntPtr value = nativeStruct.layouts;
 			Layouts = new ChannelLayout[nativeStruct.layout_count];
@@ -195,10 +200,26 @@ namespace SoundIOSharp
 				if(disposing)
 				{
 					// Dispose here any managed resources
+
+					// if device is gone, streams should also be gone.
+
+					if (outStream != null) {
+						outStream.Dispose ();
+						outStream = null;
+					}
+
+					if (inStream != null) {
+						inStream.Dispose ();
+						inStream = null;
+					}
+
 				}
 
 				// Dispose here any unmanaged resources
 				DeviceUnref();
+
+				nativeStruct = null;
+				nativePtr = IntPtr.Zero;
 			}
 			disposed = true;         
 		}
@@ -233,16 +254,22 @@ namespace SoundIOSharp
 				nativeStruct = null;
 				nativePtr = IntPtr.Zero;
 			}
+
 		}
 
 		[DllImport (SoundIO.dllName)]
 		private static extern IntPtr soundio_outstream_create(IntPtr device);
 		public OutStream OutStreamCreate()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("Device");
+			}
+
 			var streamPtr = soundio_outstream_create (nativePtr);
 			var outStreamNative = (OutStreamNative) Marshal.PtrToStructure(streamPtr, typeof(OutStreamNative));
-			var outStream = new OutStream (streamPtr, outStreamNative);
+			var stream = new OutStream (streamPtr, outStreamNative);
 
+			this.outStream = stream;
 			//Marshal.StructureToPtr<SoundIoInOutStreamNative> (soundIoInOutStreamNative, streamPtr, false);
 
 			return outStream;
@@ -252,9 +279,15 @@ namespace SoundIOSharp
 		private static extern IntPtr soundio_instream_create(IntPtr device);
 		public InStream InStreamCreate()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("Device");
+			}
+
 			var streamPtr = soundio_instream_create (nativePtr);
 			var inStreamNative = (InStreamNative) Marshal.PtrToStructure(streamPtr, typeof(InStreamNative));
-			var inStream = new InStream (streamPtr, inStreamNative);
+			var stream = new InStream (streamPtr, inStreamNative);
+
+			this.inStream = stream;
 
 			return inStream;
 		}

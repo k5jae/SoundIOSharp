@@ -37,6 +37,10 @@ namespace SoundIOSharp
 		private static extern int soundio_input_device_count(IntPtr soundio);
 		public int InputDeviceCount()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_input_device_count (soundIOStructNativePtr);
 		}
 
@@ -44,6 +48,10 @@ namespace SoundIOSharp
 		private static extern int soundio_output_device_count(IntPtr soundio);
 		public int OutputDeviceCount()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			if (CurrentBackend != Backend.None) {
 				return soundio_output_device_count (soundIOStructNativePtr);
 			}
@@ -55,9 +63,12 @@ namespace SoundIOSharp
 		private static extern IntPtr soundio_get_input_device(IntPtr soundio, int index);
 		public Device GetInputDevice(int index)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			var soundIoDevicePtr = soundio_get_input_device(soundIOStructNativePtr, index);
-			var soundIoDeviceNative = (DeviceNative) Marshal.PtrToStructure(soundIoDevicePtr, typeof(DeviceNative));
-			var soundIoDevice = new Device (soundIoDevicePtr, soundIoDeviceNative);
+			var soundIoDevice = new Device (this, soundIoDevicePtr);
 
 			return soundIoDevice;
 		}
@@ -66,9 +77,12 @@ namespace SoundIOSharp
 		private static extern IntPtr soundio_get_output_device(IntPtr soundio, int index);
 		public Device GetOutputDevice(int index)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			var soundIoDevicePtr = soundio_get_output_device(soundIOStructNativePtr, index);
-			var soundIoDeviceNative = (DeviceNative) Marshal.PtrToStructure(soundIoDevicePtr, typeof(DeviceNative));
-			var soundIoDevice = new Device (soundIoDevicePtr, soundIoDeviceNative);
+			var soundIoDevice = new Device (this, soundIoDevicePtr);
 
 			return soundIoDevice;
 		}
@@ -77,6 +91,10 @@ namespace SoundIOSharp
 		private static extern int soundio_default_input_device_index(IntPtr soundio);
 		public int DefaultInputDeviceIndex()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_default_input_device_index (soundIOStructNativePtr);
 		}
 
@@ -85,6 +103,10 @@ namespace SoundIOSharp
 		private static extern int soundio_default_output_device_index(IntPtr soundio);
 		public int DefaultOutputDeviceIndex()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			if (CurrentBackend != Backend.None) {
 				return soundio_default_output_device_index (soundIOStructNativePtr);
 			}
@@ -96,6 +118,10 @@ namespace SoundIOSharp
 		private static extern bool soundio_device_equal(IntPtr a, IntPtr b);
 		public void DeviceEqual(Device a, Device b)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			soundio_device_equal(a.nativePtr, b.nativePtr);
 		}
 
@@ -103,6 +129,10 @@ namespace SoundIOSharp
 		private static extern void soundio_device_sort_channel_layouts(IntPtr device);
 		public void DeviceSortChannelLayouts(Device device)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			soundio_device_sort_channel_layouts(device.nativePtr);
 		}
 
@@ -110,6 +140,10 @@ namespace SoundIOSharp
 		private static extern bool soundio_device_supports_format(IntPtr device, Format format);
 		public bool DeviceSupportsFormat(Device device, Format format)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_device_supports_format(device.nativePtr, format);
 		}
 
@@ -117,6 +151,10 @@ namespace SoundIOSharp
 		private static extern bool soundio_device_supports_layout(IntPtr device, ChannelLayout layout);
 		public bool DeviceSupportsLayout(Device device, ChannelLayout layout)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_device_supports_layout(device.nativePtr, layout);
 		}
 
@@ -124,6 +162,10 @@ namespace SoundIOSharp
 		private static extern bool soundio_device_supports_sample_rate(IntPtr device, int sample_rate);
 		public bool DeviceSupportsSampleRate(Device device, int sampleRate)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_device_supports_sample_rate(device.nativePtr, sampleRate);
 		}
 
@@ -131,6 +173,10 @@ namespace SoundIOSharp
 		private static extern int soundio_device_nearest_sample_rate(IntPtr device,	int sample_rate);
 		public int DeviceNearestSampleRate(Device device, int sampleRate)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_device_nearest_sample_rate(device.nativePtr, sampleRate);
 		}
 	}

@@ -45,6 +45,9 @@ namespace SoundIOSharp
 		IntPtr soundIOStructNativePtr;
 		SoundIONative soundIOStructNative;
 
+		internal event EventHandler ShutdownSoundIO;
+
+
 		/// <summary>
 		/// Gets the current backend.
 		/// </summary>
@@ -149,6 +152,10 @@ namespace SoundIOSharp
 					// Dispose here any managed resources
 				}
 
+				if (ShutdownSoundIO != null) {
+					ShutdownSoundIO (this, new EventArgs ());
+				}
+
 				Disconnect ();
 				// Dispose here any unmanaged resources
 				Destroy ();
@@ -225,6 +232,10 @@ namespace SoundIOSharp
 		/// See also Disconnect()
 		public Error ConnectBackend(Backend backend)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			var ret = soundio_connect_backend (soundIOStructNativePtr, backend);
 
 			if (ret == Error.None) {
@@ -240,6 +251,10 @@ namespace SoundIOSharp
 		/// Disconnects from a connected backend.
 		public void Disconnect()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			if (connected) {
 				if (soundIOStructNativePtr != IntPtr.Zero)
 					try {
@@ -255,6 +270,10 @@ namespace SoundIOSharp
 		/// Get a string representation of a Backend
 		public string BackendName(Backend backend)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return Marshal.PtrToStringAnsi(soundio_backend_name(backend));
 		}
 
@@ -263,6 +282,10 @@ namespace SoundIOSharp
 		/// Returns the number of available backends.
 		public int BackendCount {
 			get {
+				if (disposed) {
+					throw new ObjectDisposedException ("SoundIO");
+				}
+
 				return soundio_backend_count (soundIOStructNativePtr);
 			}
 		}
@@ -272,6 +295,10 @@ namespace SoundIOSharp
 		/// get the available backend at the specified index (0 <= index < BackendCount)
 		public Backend GetBackend(int index)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_get_backend(soundIOStructNativePtr, index);
 		}
 
@@ -280,6 +307,10 @@ namespace SoundIOSharp
 		/// Returns whether libsoundio was compiled with backend.
 		public bool HaveBackend(Backend backend)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_have_backend(backend);
 		}
 
@@ -313,6 +344,10 @@ namespace SoundIOSharp
 		/// <returns>Error Code.</returns>
 		public Error FlushEvents()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			if (CurrentBackend != Backend.None) {
 				soundio_flush_events (soundIOStructNativePtr);
 				return Error.None;
@@ -327,6 +362,10 @@ namespace SoundIOSharp
 		/// is ready or you call Wakeup(). Be ready for spurious wakeups.
 		public void WaitEvents()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			soundio_wait_events(soundIOStructNativePtr);
 		}
 
@@ -335,6 +374,10 @@ namespace SoundIOSharp
 		/// Makes WaitEvents(...) stop blocking.
 		public void Wakeup()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			soundio_wakeup(soundIOStructNativePtr);
 		}
 
@@ -355,6 +398,10 @@ namespace SoundIOSharp
 		/// OnWrite(...) and OnRead(...)
 		public void ForceDeviceScan()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			soundio_force_device_scan(soundIOStructNativePtr);
 		}
 
@@ -367,6 +414,10 @@ namespace SoundIOSharp
 		/// the supplied channel layouts.
 		public bool ChannelLayoutEqual(ChannelLayout a, ChannelLayout b)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("SoundIO");
+			}
+
 			return soundio_channel_layout_equal(a, b);
 		}
 

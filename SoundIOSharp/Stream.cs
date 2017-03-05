@@ -31,7 +31,7 @@ namespace SoundIOSharp
 {
 	public abstract class Stream : IDisposable
 	{
-		bool disposed;
+		protected bool disposed;
 
 		protected abstract void Destroy();
 

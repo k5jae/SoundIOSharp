@@ -250,6 +250,10 @@ namespace SoundIOSharp
 		private static extern void soundio_outstream_destroy(IntPtr outstream);
 		protected override void Destroy()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			try
 			{
 				soundio_outstream_destroy(nativePtr);
@@ -286,6 +290,10 @@ namespace SoundIOSharp
 		///   compatible with the chosen device.
 		public Error Open()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			Marshal.StructureToPtr<OutStreamNative> (nativeStruct, nativePtr, false);
 
 			var ret = soundio_outstream_open (nativePtr);
@@ -309,6 +317,10 @@ namespace SoundIOSharp
 		/// * Error.BackendDisconnected
 		public Error Start()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			Marshal.StructureToPtr<OutStreamNative> (nativeStruct, nativePtr, false);
 
 			return soundio_outstream_start (nativePtr);
@@ -347,6 +359,10 @@ namespace SoundIOSharp
 		///   case this error code is returned.
 		public Error BeginWrite(out ChannelArea area, ref int frameCount)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			IntPtr ptr;
 
 			var ret = soundio_outstream_begin_write(nativePtr, out ptr, ref frameCount);
@@ -374,6 +390,10 @@ namespace SoundIOSharp
 		///   the outstream is still in a valid state and streaming can continue.
 		public Error EndWrite()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			return soundio_outstream_end_write (nativePtr);
 		}
 
@@ -394,6 +414,10 @@ namespace SoundIOSharp
 		/// * Error.IncompatibleDevice
 		public Error ClearBuffer()
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			return soundio_outstream_clear_buffer (nativePtr);
 		}
 
@@ -419,6 +443,10 @@ namespace SoundIOSharp
 		/// * Error.Invalid - outstream not opened and started
 		public Error Pause(bool pause)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			return soundio_outstream_pause (nativePtr, pause);
 		}
 
@@ -437,6 +465,10 @@ namespace SoundIOSharp
 		/// Error.Streaming
 		public Error GetLatency(out double latency)
 		{
+			if (disposed) {
+				throw new ObjectDisposedException ("OutStream");
+			}
+
 			return soundio_outstream_get_latency (nativePtr, out latency);
 		}
 	}
